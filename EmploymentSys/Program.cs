@@ -1,4 +1,5 @@
 using DataLayer.Models;
+using DTOLayer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using RepositoryLayer.IRepository;
@@ -19,7 +20,7 @@ builder.Services.AddSwaggerGen();
 
 #region Service Injected
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-builder.Services.AddScoped<ICustomServices<User>, UserService>();
+builder.Services.AddScoped<ICustomServices<UserDTO>, UserService>();
 #endregion
 
 var app = builder.Build();

@@ -1,8 +1,10 @@
 ﻿using DataLayer.Models;
+using DTOLayer;
 using RepositoryLayer.IRepository;
 using ServiceLayer.ICustomServices;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
@@ -10,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace ServiceLayer.CustomServices
 {
-    public class UserService : ICustomServices<User>
+    public class UserService : ICustomServices<UserDTO>
     {
 
         private readonly IRepository<User> _UserRepository;
@@ -18,38 +20,49 @@ namespace ServiceLayer.CustomServices
         {
             _UserRepository = userRepository;
         }
-        public void Delete(User entity)
+
+        public void Delete(UserDTO entity)
         {
             throw new NotImplementedException();
         }
 
-        public User Get(int Id)
+        public UserDTO Get(int Id)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<User> GetAll()
-        {
-            return _UserRepository.GetAll();
-        }
-
-        public List<User> GetAllLis()
-        {
-            return _UserRepository.GetAll().ToList();
-
-        }
-
-        public void Insert(User entity)
+        public IEnumerable<UserDTO> GetAll()
         {
             throw new NotImplementedException();
         }
 
-        public void Remove(User entity)
+        public List<UserDTO> GetAllLis()
+        {
+            var s=_UserRepository.GetAll().ToList();
+            var DTO = s.Select(a =>
+            {
+                UserDTO dto = new UserDTO();
+                dto.Id = a.Id;
+                dto.Name = a.Name;
+                dto.Email = a.Email;
+                dto.Address = a.Address;
+                return dto;
+            }).ToList();
+
+            return DTO;
+        }
+
+        public void Insert(UserDTO entity)
         {
             throw new NotImplementedException();
         }
 
-        public void Update(User entity)
+        public void Remove(UserDTO entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Update(UserDTO entity)
         {
             throw new NotImplementedException();
         }

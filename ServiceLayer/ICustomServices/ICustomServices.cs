@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DTOLayer;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace ServiceLayer.ICustomServices
 {
-    public interface ICustomServices <T> where T : class
+    public interface ICustomServices <DTO> where DTO : BaseDTO
     {
-        IEnumerable<T> GetAll();
-        List<T> GetAllLis();
-        T Get(int Id);
-        void Insert(T entity);
-        void Update(T entity);
-        void Delete(T entity);
-        void Remove(T entity);
+        IEnumerable<DTO> GetAll();
+        List<DTO> GetAllLis();
+        DTO Get(int Id);
+        void Insert(DTO entity);
+        void Update(DTO entity);
+        void Delete(DTO entity);
+        void Remove(DTO entity);
     }
 }
