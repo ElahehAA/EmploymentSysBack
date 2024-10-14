@@ -21,6 +21,10 @@ builder.Services.AddSwaggerGen();
 #region Service Injected
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<ICustomServices<UserDTO>, UserService>();
+builder.Services.AddScoped<ICustomServices<LocationDTO>, LocationService>();
+builder.Services.AddScoped<ICustomServices<RoleDTO>, RoleService>();
+builder.Services.AddScoped<ICustomServices<AdvertismentCatDTO>, AdvertismentCatService>();
+builder.Services.AddScoped<ICustomServices<AdvertismentDTO>, AdvertismentService>();
 #endregion
 
 var app = builder.Build();
