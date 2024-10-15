@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ServiceLayer.ICustomServices
 {
-    public interface ICustomServices <DTO> where DTO : BaseDTO
+    public interface ICustomUserServices<DTO> where DTO : UserDTO
     {
         IEnumerable<DTO> GetAll();
         List<DTO> GetAllList();
@@ -16,5 +16,7 @@ namespace ServiceLayer.ICustomServices
         void Update(DTO entity);
         void Delete(DTO entity);
         void Remove(DTO entity);
+        DTO? AuthenticateUser(DTO entity);
+        string Login(DTO entity);
     }
 }
