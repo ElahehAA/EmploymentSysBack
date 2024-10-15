@@ -36,7 +36,7 @@ namespace ServiceLayer.CustomServices
             throw new NotImplementedException();
         }
 
-        public List<AdvertismentDTO> GetAllLis()
+        public List<AdvertismentDTO> GetAllList()
         {
             throw new NotImplementedException();
         }

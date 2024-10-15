@@ -41,6 +41,11 @@ namespace ServiceLayer.CustomServices
             throw new NotImplementedException();
         }
 
+        public List<RoleDTO> GetAllList()
+        {
+            throw new NotImplementedException();
+        }
+
         public void Insert(RoleDTO entity)
         {
             throw new NotImplementedException();

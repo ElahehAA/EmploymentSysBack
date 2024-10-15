@@ -9,11 +9,14 @@ namespace DTOLayer
 {
     public class UserDTO:BaseDTO
     {
-        public long Id { get; set; }
+        public long? Id { get; set; }
         public string Name { get; set; } = null!;
         public string UserName { get; set; } = null!;
         public string? PhoneNum { get; set; }
         public string? Email { get; set; }
         public string? Address { get; set; }
+        public string RoleName { get; set; }
+        public string Password { get; set; }
+        public int? RoleType { get; set; }
     }
 }

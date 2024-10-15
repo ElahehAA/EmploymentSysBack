@@ -19,6 +19,7 @@ namespace DataLayer.Models
         public int Id { get; set; }
         [StringLength(32)]
         public string Name { get; set; } = null!;
+        public int RoleType { get; set; }
 
         [InverseProperty("Role")]
         public virtual ICollection<User> Users { get; set; }

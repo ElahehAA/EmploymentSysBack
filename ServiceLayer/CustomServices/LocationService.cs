@@ -41,6 +41,11 @@ namespace ServiceLayer.CustomServices
             throw new NotImplementedException();
         }
 
+        public List<LocationDTO> GetAllList()
+        {
+            throw new NotImplementedException();
+        }
+
         public void Insert(LocationDTO entity)
         {
             throw new NotImplementedException();
