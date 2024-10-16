@@ -41,7 +41,7 @@ namespace RepositoryLayer.Repository
 
             public IEnumerable<T> GetAll()
             {
-                return entities.AsEnumerable();
+                return entities .AsEnumerable();
             }
 
             public void Insert(T entity)

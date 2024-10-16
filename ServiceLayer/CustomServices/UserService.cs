@@ -11,16 +11,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ServiceLayer.Extension;
+using RepositoryLayer.Repository;
 
 namespace ServiceLayer.CustomServices
 {
     public class UserService : ICustomUserServices<UserDTO>
     {
 
-        private readonly IRepository<User> _UserRepository;
+        private UserReository _UserRepository;
         private TokenService _TokenService;
         public UserService(
-            IRepository<User> userRepository, TokenService tokenService)
+            UserReository userRepository, TokenService tokenService)
         {
             _UserRepository = userRepository;
             _TokenService = tokenService;
@@ -36,7 +37,8 @@ namespace ServiceLayer.CustomServices
             UserDTO dto = new UserDTO()
             {
                 UserName = user.UserName,
-                Password = user.Password
+                Password = user.Password,
+                RoleName=user.Role.Name,
             };
 
             return dto;
@@ -73,6 +75,7 @@ namespace ServiceLayer.CustomServices
                 UserDTO dto = new UserDTO();
                 dto.UserName = a.UserName;
                 dto.RoleName = a.Role.Name;
+                dto.RoleType=a.Role.RoleType;
                 return dto;
             }).ToList();
 
