@@ -12,11 +12,13 @@ namespace ServiceLayer.ICustomServices
         IEnumerable<DTO> GetAll();
         List<DTO> GetAllList();
         DTO Get(int Id);
-        void Insert(DTO entity);
+        DTO Insert(DTO entity);
         void Update(DTO entity);
         void Delete(DTO entity);
         void Remove(DTO entity);
         DTO? AuthenticateUser(DTO entity);
-        string Login(DTO entity);
+        LoginDTO Login(DTO entity);
+        UserDTO Register(DTO entity);
+
     }
 }

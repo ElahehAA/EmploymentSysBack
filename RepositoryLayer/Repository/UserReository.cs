@@ -41,7 +41,9 @@ namespace RepositoryLayer.Repository
 
         public void Insert(User entity)
         {
-            throw new NotImplementedException();
+            _employmentSysContext.Add(entity);
+            _employmentSysContext.SaveChanges();
+
         }
 
         public void Remove(User entity)

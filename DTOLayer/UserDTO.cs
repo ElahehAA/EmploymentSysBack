@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
@@ -18,5 +19,8 @@ namespace DTOLayer
         public string RoleName { get; set; }
         public string Password { get; set; }
         public int? RoleType { get; set; }
+        public string token { get; set; }
     }
+
+ 
 }

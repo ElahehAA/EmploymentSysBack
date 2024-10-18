@@ -43,7 +43,20 @@ namespace ServiceLayer.CustomServices
 
         public List<RoleDTO> GetAllList()
         {
-            throw new NotImplementedException();
+
+            IEnumerable<Role> Roles = _RoleRepository.GetAll();
+            List<RoleDTO> roleDTOs = Roles.Select(a =>
+            {
+                RoleDTO role = new RoleDTO()
+                {
+                    Name = a.Name,
+                    Id = a.Id,
+                    RoleType = a.RoleType,
+                };
+                return role;
+            }).ToList();
+
+            return roleDTOs;
         }
 
         public void Insert(RoleDTO entity)

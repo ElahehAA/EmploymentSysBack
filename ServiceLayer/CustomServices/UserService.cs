@@ -20,11 +20,16 @@ namespace ServiceLayer.CustomServices
 
         private UserReository _UserRepository;
         private TokenService _TokenService;
+        //private RoleService _RoleService;
+        private ICustomServices<RoleDTO> _RoleService;
         public UserService(
-            UserReository userRepository, TokenService tokenService)
+            UserReository userRepository,
+            TokenService tokenService,
+            ICustomServices<RoleDTO> roleService)
         {
             _UserRepository = userRepository;
             _TokenService = tokenService;
+            _RoleService = roleService;
         }
 
         public UserDTO? AuthenticateUser(UserDTO userDTO)
@@ -38,19 +43,27 @@ namespace ServiceLayer.CustomServices
             {
                 UserName = user.UserName,
                 Password = user.Password,
-                RoleName=user.Role.Name,
+                RoleType=user.Role.RoleType,
             };
 
             return dto;
         }
-        public string Login(UserDTO userDTO)
+        public LoginDTO Login(UserDTO userDTO)
         {
-           UserDTO? user = AuthenticateUser(userDTO);
+            UserDTO? user = AuthenticateUser(userDTO);
+            LoginDTO dTO = new LoginDTO();
+            dTO.UserName = user.UserName;
+            dTO.Password = user.Password;
+            dTO.RoleType = user.RoleType.GetValueOrDefault(0);
+
             if (user != null) {
-                string token = _TokenService.GenerateToken(user);
-                return token;
+                dTO.token = _TokenService.GenerateToken(user);
             }
-            return "";
+            else
+            {
+                dTO.token = "";
+            }
+            return dTO;
         }
         public void Delete(UserDTO userDTO)
         {
@@ -93,6 +106,35 @@ namespace ServiceLayer.CustomServices
         }
 
         public void Update(UserDTO userDTO)
+        {
+            throw new NotImplementedException();
+        }
+
+        public UserDTO? Register(UserDTO userDto)
+        {
+            bool IsExist=_UserRepository.GetAll().Any(i=>i.UserName == userDto.UserName);
+            RoleDTO? role = _RoleService.GetAllList().FirstOrDefault(i => i.RoleType == 2);
+            if (IsExist)
+            {
+                return null;
+            }
+            User user = new User()
+            {
+                UserName = userDto.UserName,
+                Name = userDto.Name,
+                Password = userDto.Password,
+                Email = userDto.Email,
+                PhoneNum = userDto.PhoneNum,
+                Address = userDto.Address,
+                RoleId = role.Id
+            };
+            _UserRepository.Insert(user);
+            userDto.RoleType = role.RoleType;
+            userDto.token = _TokenService.GenerateToken(userDto);
+            return userDto;
+        }
+
+        UserDTO ICustomUserServices<UserDTO>.Insert(UserDTO entity)
         {
             throw new NotImplementedException();
         }

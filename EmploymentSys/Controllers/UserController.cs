@@ -21,19 +21,23 @@ namespace EmploymentSys.Controllers
         [Route("EmploymentSys/Login")]
         public ActionResult Login([FromBody]UserDTO userDTO)
         {
-            string token=_UserService.Login(userDTO);
-            if (!string.IsNullOrEmpty(token)) { 
-                return Ok(token);
+            LoginDTO Result=_UserService.Login(userDTO);
+            if (!string.IsNullOrEmpty(Result.token)) { 
+                return Ok(Result);
             }
             return BadRequest("نام کاربری یا رمز عبور وارد شده اشتباه می باشد");
         }
 
-        [HttpGet]
-        [Route("EmploymentSys/GetAll")]
-        public ActionResult GetAll()
-        {
-            var users = _UserService.GetAllList();
-            return Ok(users);
+        [HttpPost]
+        [Route("EmploymentSys/Register")]
+        public ActionResult Register(UserDTO userDTO) { 
+            UserDTO Result=_UserService.Register(userDTO);
+            if (Result == null)
+            {
+                return BadRequest("این نام کاربری قبلا ثبت نام کرده است");
+            }
+            return Ok(Result);
         }
+
     }
 }
