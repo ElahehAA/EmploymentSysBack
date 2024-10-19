@@ -10,7 +10,7 @@ namespace RepositoryLayer.IRepository
     public interface IRepository <T> where T : class
     {
         IEnumerable<T> GetAll();
-        T Get(int Id);
+        T Get(long Id);
         void Insert(T entity);
         void Update(T entity);
         void Delete(T entity);

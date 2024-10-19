@@ -14,7 +14,7 @@ namespace ServiceLayer.ICustomServices
         DTO Get(int Id);
         void Insert(DTO entity);
         void Update(DTO entity);
-        void Delete(DTO entity);
+        void Delete(int id);
         void Remove(DTO entity);
     }
 }

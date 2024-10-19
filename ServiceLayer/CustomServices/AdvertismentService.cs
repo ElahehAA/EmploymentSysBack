@@ -26,6 +26,11 @@ namespace ServiceLayer.CustomServices
             throw new NotImplementedException();
         }
 
+        public void Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public AdvertismentDTO Get(int Id)
         {
             throw new NotImplementedException();

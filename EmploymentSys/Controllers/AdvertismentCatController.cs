@@ -15,5 +15,36 @@ namespace EmploymentSys.Controllers
             _AdvertismentCatService = AdvertismentCatService;
         }
 
+        [HttpPost]
+        [Route("EmploymentSys/AdvertismentCat")]
+        public ActionResult Insert(AdvertismentCatDTO dto)
+        {
+            _AdvertismentCatService.Insert(dto);
+            return Ok(dto);
+        }
+
+        [HttpPut]
+        [Route("EmploymentSys/AdvertismentCat")]
+        public ActionResult Update(AdvertismentCatDTO dto)
+        {
+            _AdvertismentCatService.Update(dto);
+            return Ok(dto);
+        }
+
+        [HttpGet]
+        [Route("EmploymentSys/AdvertismentCat")]
+        public ActionResult BindGridData()
+        {
+            List<AdvertismentCatDTO> result=_AdvertismentCatService.GetAllList();
+            return Ok(result);
+        }
+
+        [HttpDelete]
+        [Route("EmploymentSys/AdvertismentCat/{id}")]
+        public ActionResult Delete(int id)
+        { 
+            _AdvertismentCatService.Delete(id);
+            return Ok();
+        }
     }
 }

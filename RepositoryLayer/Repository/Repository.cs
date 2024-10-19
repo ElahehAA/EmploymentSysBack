@@ -34,7 +34,7 @@ namespace RepositoryLayer.Repository
                 _employmentSysContext.SaveChanges();
             }
 
-            public T Get(int Id)
+            public T Get(long Id)
             {
                 return entities.Find(Id);
             }
