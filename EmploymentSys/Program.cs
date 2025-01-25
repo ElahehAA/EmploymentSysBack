@@ -2,6 +2,7 @@ using DataLayer.Models;
 using DTOLayer;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using RepositoryLayer.IRepository;
@@ -40,10 +41,16 @@ internal class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
+
+
+
         #region Service Injected
+        builder.Services.AddHttpContextAccessor();
         builder.Services.AddSingleton<TokenService, TokenService>();
+        builder.Services.AddSingleton<AuthService, AuthService>();
         builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         builder.Services.AddScoped<UserReository, UserReository>();
+        builder.Services.AddScoped<AdvertismentRepository, AdvertismentRepository>();
         builder.Services.AddScoped<ICustomUserServices<UserDTO>, UserService>();
         builder.Services.AddScoped<ICustomServices<LocationDTO>, LocationService>();
         builder.Services.AddScoped<ICustomServices<RoleDTO>, RoleService>();
@@ -54,10 +61,12 @@ internal class Program
         #region AddTokenSetting
         builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
         {
+            options.RequireHttpsMetadata = false;
+            options.SaveToken = true; 
             options.TokenValidationParameters = new TokenValidationParameters
             {
-                ValidateIssuer = true,
-                ValidateAudience = true,
+                ValidateIssuer = false,
+                ValidateAudience = false,
                 ValidateLifetime = true,
                 ValidateIssuerSigningKey = true,
                 ValidIssuer = builder.Configuration["Jwt:Issuer"],
@@ -65,6 +74,8 @@ internal class Program
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("aaagggg55555cccccddddddddvsvsvsvsvvooooo"))
             };
         });
+
+        builder.Services.AddAuthorization();
         #endregion
 
         var app = builder.Build();

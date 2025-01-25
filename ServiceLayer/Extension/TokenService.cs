@@ -27,9 +27,9 @@ namespace ServiceLayer.Extension
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
             var claims = new[]
             {
-                new Claim(ClaimTypes.Role,user.RoleType.ToString()),
+                new Claim("Role",user.RoleType.ToString()),
+                new Claim("User",user.Id.ToString()),
             };
-            //var claims = new Claim();
             var token = new JwtSecurityToken(_config["Jwt:Issuer"],
                 _config["Jwt:Audience"],
                 claims,

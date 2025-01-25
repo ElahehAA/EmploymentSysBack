@@ -1,9 +1,10 @@
 ﻿using DataLayer.Models;
 using DTOLayer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ServiceLayer.ICustomServices;
 using System.Collections.Generic;
-
+using System.Security.Claims;
 namespace EmploymentSys.Controllers
 {
     [ApiController]
@@ -31,7 +32,7 @@ namespace EmploymentSys.Controllers
             return Ok(dto);
         }
 
-        [HttpGet]
+        [HttpGet,Authorize]
         [Route("EmploymentSys/AdvertismentCat")]
         public ActionResult BindGridData()
         {
