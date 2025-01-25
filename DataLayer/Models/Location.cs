@@ -11,6 +11,7 @@ namespace DataLayer.Models
     {
         public Location()
         {
+            Advertisments = new HashSet<Advertisment>();
             InversePidNavigation = new HashSet<Location>();
         }
 
@@ -25,6 +26,8 @@ namespace DataLayer.Models
         [ForeignKey("Pid")]
         [InverseProperty("InversePidNavigation")]
         public virtual Location? PidNavigation { get; set; }
+        [InverseProperty("City")]
+        public virtual ICollection<Advertisment> Advertisments { get; set; }
         [InverseProperty("PidNavigation")]
         public virtual ICollection<Location> InversePidNavigation { get; set; }
     }

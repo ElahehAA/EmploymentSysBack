@@ -26,5 +26,11 @@ namespace DTOLayer
         public string? MinimumEducationDegree { get; set; }
         public string? Desc { get; set; }
         public bool IsConfirm { get; set; }
+
+        public string? AdvertismentCatname { get; set; }
+        public string? CityName { get; set; }
+
+        public long? UserID { get; set; }
+
     }
 }

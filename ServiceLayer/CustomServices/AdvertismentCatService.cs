@@ -1,15 +1,20 @@
 ﻿using DataLayer.Models;
 using DTOLayer;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Filters;
 using RepositoryLayer.IRepository;
+using ServiceLayer.Extension;
 using ServiceLayer.ICustomServices;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Utility;
+using static System.Net.WebRequestMethods;
 
 namespace ServiceLayer.CustomServices
 {
@@ -17,13 +22,16 @@ namespace ServiceLayer.CustomServices
     {
 
         private readonly IRepository<AdvertismentCat> _AdvertismentCatRepository;
-        public AdvertismentCatService(IRepository<AdvertismentCat> advertismentCatRepository)
+        private readonly AuthService authService;
+        public AdvertismentCatService(IRepository<AdvertismentCat> advertismentCatRepository,
+            AuthService _authService)
         {
             _AdvertismentCatRepository = advertismentCatRepository;
+            authService = _authService;
         }
 
 
-        public void Delete(int id)
+        public void Delete(long id)
         {
             AdvertismentCat cat=_AdvertismentCatRepository.Get(id);
             if (cat == null)
@@ -36,7 +44,7 @@ namespace ServiceLayer.CustomServices
 
         }
 
-        public AdvertismentCatDTO Get(int Id)
+        public AdvertismentCatDTO Get(long Id)
         {
             throw new NotImplementedException();
         }
@@ -48,6 +56,9 @@ namespace ServiceLayer.CustomServices
 
         public List<AdvertismentCatDTO> GetAllList()
         {
+
+            var user = authService.GetUserID();
+
             IEnumerable<AdvertismentCat> cats = _AdvertismentCatRepository.GetAll().Where(i=>i.IsDelete==false);
             List<AdvertismentCatDTO> DTOs = cats.Select(a =>
             {

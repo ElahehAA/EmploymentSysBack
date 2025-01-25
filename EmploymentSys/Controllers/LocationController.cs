@@ -15,5 +15,13 @@ namespace EmploymentSys.Controllers
             _LocationService = LocationService;
         }
 
+        [HttpGet]
+        [Route("EmploymentSys/Locations")]
+        public ActionResult GetAllCities()
+        {
+            var Resul=_LocationService.GetAllList();
+
+            return Ok(Resul);
+        }
     }
 }

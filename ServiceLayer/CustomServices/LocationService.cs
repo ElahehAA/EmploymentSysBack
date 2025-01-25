@@ -9,6 +9,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Utility;
 
 namespace ServiceLayer.CustomServices
 {
@@ -26,12 +27,12 @@ namespace ServiceLayer.CustomServices
             throw new NotImplementedException();
         }
 
-        public void Delete(int id)
+        public void Delete(long id)
         {
             throw new NotImplementedException();
         }
 
-        public LocationDTO Get(int Id)
+        public LocationDTO Get(long Id)
         {
             throw new NotImplementedException();
         }
@@ -48,7 +49,14 @@ namespace ServiceLayer.CustomServices
 
         public List<LocationDTO> GetAllList()
         {
-            throw new NotImplementedException();
+            List<Location> locations= _LocationRepository.GetAll().Where(i=>i.Pid!=null).ToList();
+            List<LocationDTO> DTOs = locations.Select(i =>
+            {
+                LocationDTO dto = ObjectConvertor.ConvertObject<Location, LocationDTO>(i);
+                return dto;
+            }).ToList();
+
+            return DTOs;
         }
 
         public void Insert(LocationDTO entity)

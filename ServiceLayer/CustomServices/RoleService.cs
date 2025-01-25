@@ -26,12 +26,12 @@ namespace ServiceLayer.CustomServices
             throw new NotImplementedException();
         }
 
-        public void Delete(int id)
+        public void Delete(long id)
         {
             throw new NotImplementedException();
         }
 
-        public RoleDTO Get(int Id)
+        public RoleDTO Get(long Id)
         {
             throw new NotImplementedException();
         }

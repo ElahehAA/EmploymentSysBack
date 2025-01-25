@@ -9,6 +9,11 @@ namespace DataLayer.Models
     [Table("User")]
     public partial class User
     {
+        public User()
+        {
+            Advertisments = new HashSet<Advertisment>();
+        }
+
         [Key]
         [Column("ID")]
         public long Id { get; set; }
@@ -31,6 +36,8 @@ namespace DataLayer.Models
 
         [ForeignKey("RoleId")]
         [InverseProperty("Users")]
-        public virtual Role Role { get; set; }
+        public virtual Role Role { get; set; } = null!;
+        [InverseProperty("Cuser")]
+        public virtual ICollection<Advertisment> Advertisments { get; set; }
     }
 }

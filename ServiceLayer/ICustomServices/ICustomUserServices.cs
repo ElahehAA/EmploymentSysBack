@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ServiceLayer.ICustomServices
 {
-    public interface ICustomUserServices<DTO> where DTO : UserDTO
+    public interface ICustomUserServices<DTO> where DTO : class
     {
         IEnumerable<DTO> GetAll();
         List<DTO> GetAllList();

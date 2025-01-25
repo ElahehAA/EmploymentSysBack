@@ -8,6 +8,7 @@ namespace DTOLayer
 {
     public class LoginDTO
     {
+        public long? Id { get; set; }
         public string UserName { get; set; } = null!;
         public string Password { get; set; }
         public string token { get; set; }

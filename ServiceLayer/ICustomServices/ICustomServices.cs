@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace ServiceLayer.ICustomServices
 {
-    public interface ICustomServices <DTO> where DTO : BaseDTO
+    public interface ICustomServices <DTO> where DTO : class
     {
         IEnumerable<DTO> GetAll();
         List<DTO> GetAllList();
-        DTO Get(int Id);
+        DTO Get(long Id);
         void Insert(DTO entity);
         void Update(DTO entity);
-        void Delete(int id);
+        void Delete(long id);
         void Remove(DTO entity);
     }
 }

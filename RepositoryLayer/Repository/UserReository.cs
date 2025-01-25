@@ -39,11 +39,11 @@ namespace RepositoryLayer.Repository
                 .AsEnumerable();
         }
 
-        public void Insert(User entity)
+        public User Insert(User entity)
         {
             _employmentSysContext.Add(entity);
             _employmentSysContext.SaveChanges();
-
+            return entities.FirstOrDefault(i=>i.UserName==entity.UserName);
         }
 
         public void Remove(User entity)

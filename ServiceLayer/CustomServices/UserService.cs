@@ -12,6 +12,8 @@ using System.Text;
 using System.Threading.Tasks;
 using ServiceLayer.Extension;
 using RepositoryLayer.Repository;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 
 namespace ServiceLayer.CustomServices
 {
@@ -20,27 +22,34 @@ namespace ServiceLayer.CustomServices
 
         private UserReository _UserRepository;
         private TokenService _TokenService;
+        private readonly IHttpContextAccessor _http;
         //private RoleService _RoleService;
         private ICustomServices<RoleDTO> _RoleService;
         public UserService(
             UserReository userRepository,
             TokenService tokenService,
-            ICustomServices<RoleDTO> roleService)
+            ICustomServices<RoleDTO> roleService,
+            IHttpContextAccessor http)
         {
             _UserRepository = userRepository;
             _TokenService = tokenService;
             _RoleService = roleService;
+            _http = http;
         }
 
         public UserDTO? AuthenticateUser(UserDTO userDTO)
         {
+            //var x = _http.HttpContext.User.Claims.First(c => c.Type == "Admin").Value;
+
+
             User user = _UserRepository.GetAll().FirstOrDefault(i => i.UserName == userDTO.UserName && i.Password == userDTO.Password);
             if (user == null)
             {
-                return null;
+                throw new Exception("نام کاربری یا رمز عبور اشتباه است");
             }
             UserDTO dto = new UserDTO()
             {
+                Id = user.Id,
                 UserName = user.UserName,
                 Password = user.Password,
                 RoleType=user.Role.RoleType,
@@ -52,16 +61,19 @@ namespace ServiceLayer.CustomServices
         {
             UserDTO? user = AuthenticateUser(userDTO);
             LoginDTO dTO = new LoginDTO();
-            dTO.UserName = user.UserName;
-            dTO.Password = user.Password;
-            dTO.RoleType = user.RoleType.GetValueOrDefault(0);
-
-            if (user != null) {
-                dTO.token = _TokenService.GenerateToken(user);
-            }
-            else
+            if (user != null)
             {
-                dTO.token = "";
+                dTO.UserName = user.UserName;
+                dTO.Password = user.Password;
+                dTO.RoleType = user.RoleType.GetValueOrDefault(0);
+                dTO.Id = user.Id;
+                if (user != null) {
+                    dTO.token = _TokenService.GenerateToken(user);
+                }
+                else
+                {
+                    dTO.token = "";
+                }
             }
             return dTO;
         }
@@ -128,9 +140,10 @@ namespace ServiceLayer.CustomServices
                 Address = userDto.Address,
                 RoleId = role.Id
             };
-            _UserRepository.Insert(user);
+            var Result= _UserRepository.Insert(user);
             userDto.RoleType = role.RoleType;
             userDto.token = _TokenService.GenerateToken(userDto);
+            userDto.Id=Result.Id;
             return userDto;
         }
 

@@ -37,5 +37,17 @@ namespace DataLayer.Models
         [Required]
         public bool? IsActive { get; set; }
         public bool IsDelete { get; set; }
+        [Column("CUserId")]
+        public long? CuserId { get; set; }
+
+        [ForeignKey("AdvertismentCatId")]
+        [InverseProperty("Advertisments")]
+        public virtual AdvertismentCat AdvertismentCat { get; set; } = null!;
+        [ForeignKey("CityId")]
+        [InverseProperty("Advertisments")]
+        public virtual Location City { get; set; } = null!;
+        [ForeignKey("CuserId")]
+        [InverseProperty("Advertisments")]
+        public virtual User? Cuser { get; set; }
     }
 }

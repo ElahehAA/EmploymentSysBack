@@ -19,13 +19,20 @@ namespace EmploymentSys.Controllers
 
         [HttpPost]
         [Route("EmploymentSys/Login")]
-        public ActionResult Login([FromBody]UserDTO userDTO)
+        public ActionResult Login(UserDTO userDTO)
         {
-            LoginDTO Result=_UserService.Login(userDTO);
-            if (!string.IsNullOrEmpty(Result.token)) { 
-                return Ok(Result);
+            try
+            {
+                LoginDTO Result=_UserService.Login(userDTO);
+                if (!string.IsNullOrEmpty(Result.token)) { 
+                    return Ok(Result);
+                }
+                return BadRequest("نام کاربری یا رمز عبور وارد شده اشتباه می باشد");
             }
-            return BadRequest("نام کاربری یا رمز عبور وارد شده اشتباه می باشد");
+            catch(Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpPost]

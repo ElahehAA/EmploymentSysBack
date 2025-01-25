@@ -9,6 +9,11 @@ namespace DataLayer.Models
     [Table("AdvertismentCat")]
     public partial class AdvertismentCat
     {
+        public AdvertismentCat()
+        {
+            Advertisments = new HashSet<Advertisment>();
+        }
+
         [Key]
         [Column("ID")]
         public long Id { get; set; }
@@ -18,5 +23,8 @@ namespace DataLayer.Models
         [Required]
         public bool? IsActive { get; set; }
         public bool IsDelete { get; set; }
+
+        [InverseProperty("AdvertismentCat")]
+        public virtual ICollection<Advertisment> Advertisments { get; set; }
     }
 }
