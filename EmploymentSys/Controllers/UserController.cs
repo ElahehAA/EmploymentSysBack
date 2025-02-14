@@ -37,13 +37,20 @@ namespace EmploymentSys.Controllers
 
         [HttpPost]
         [Route("EmploymentSys/Register")]
-        public ActionResult Register(UserDTO userDTO) { 
-            UserDTO Result=_UserService.Register(userDTO);
-            if (Result == null)
+        public ActionResult Register(UserDTO userDTO) {
+            try
             {
-                return BadRequest("این نام کاربری قبلا ثبت نام کرده است");
+                UserDTO Result=_UserService.Register(userDTO);
+                if (Result == null)
+                {
+                    return BadRequest("این نام کاربری قبلا ثبت نام کرده است");
+                }
+                return Ok(Result);
             }
-            return Ok(Result);
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
     }

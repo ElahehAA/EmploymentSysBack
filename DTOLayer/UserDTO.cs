@@ -20,6 +20,7 @@ namespace DTOLayer
         public string Password { get; set; }
         public int? RoleType { get; set; }
         public string token { get; set; }
+
     }
 
  

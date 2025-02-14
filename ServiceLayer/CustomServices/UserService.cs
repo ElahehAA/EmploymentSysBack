@@ -42,7 +42,7 @@ namespace ServiceLayer.CustomServices
             //var x = _http.HttpContext.User.Claims.First(c => c.Type == "Admin").Value;
 
 
-            User user = _UserRepository.GetAll().FirstOrDefault(i => i.UserName == userDTO.UserName && i.Password == userDTO.Password);
+            User user = _UserRepository.GetAll().FirstOrDefault(i => i.UserName == userDTO.UserName && i.Password == userDTO.Password && i.Role.RoleType==userDTO.RoleType);
             if (user == null)
             {
                 throw new Exception("نام کاربری یا رمز عبور اشتباه است");
@@ -125,10 +125,10 @@ namespace ServiceLayer.CustomServices
         public UserDTO? Register(UserDTO userDto)
         {
             bool IsExist=_UserRepository.GetAll().Any(i=>i.UserName == userDto.UserName);
-            RoleDTO? role = _RoleService.GetAllList().FirstOrDefault(i => i.RoleType == 2);
+            RoleDTO? role = _RoleService.GetAllList().FirstOrDefault(i => i.RoleType == userDto.RoleType);
             if (IsExist)
             {
-                return null;
+                throw new Exception("این نام کاربری قبلا ثبت شده است .");
             }
             User user = new User()
             {
